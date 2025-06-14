@@ -1,0 +1,25 @@
+VERSION = 1,
+
+option RoleDisplaySystem.ChatIntegration
+{
+	type = boolean,
+	default = true,
+	page = RoleDisplaySystem,
+	translation = ChatIntegration,
+}
+
+option RoleDisplaySystem.MapIntegration
+{
+	type = boolean,
+	default = true,
+	page = RoleDisplaySystem,
+	translation = MapIntegration,
+}
+
+option RoleDisplaySystem.ShowMultipleRoles
+{
+	type = boolean,
+	default = true,
+	page = RoleDisplaySystem,
+	translation = ShowMultipleRoles,
+}

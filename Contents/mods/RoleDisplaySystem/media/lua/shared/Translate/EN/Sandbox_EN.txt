@@ -1,0 +1,12 @@
+Sandbox_EN = {
+  Sandbox_RoleDisplaySystem = "Role Display System",
+
+  Sandbox_ChatIntegration = "Chat Integration",
+  Sandbox_ChatIntegration_tooltip = "Automatically display role tags in chat messages.",
+
+  Sandbox_MapIntegration = "Map Integration",
+  Sandbox_MapIntegration_tooltip = "Show role tags next to player names on the map.",
+
+  Sandbox_ShowMultipleRoles = "Show Multiple Roles",
+  Sandbox_ShowMultipleRoles_tooltip = "If enabled, players can have multiple roles displayed. If disabled, only the highest priority role is shown.",
+}

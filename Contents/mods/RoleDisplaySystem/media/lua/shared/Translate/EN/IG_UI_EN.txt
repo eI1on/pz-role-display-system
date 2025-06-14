@@ -1,0 +1,46 @@
+IGUI_EN = {
+    IGUI_RM_Title = "Role Manager",
+    IGUI_RM_Roles = "Roles",
+    IGUI_RM_PlayersInRole = "Players in Role",
+    IGUI_RM_RoleOptions = "Role Options",
+    IGUI_RM_NoRoleSelected = "No role selected",
+
+    IGUI_RM_AddRole = "Add Role",
+    IGUI_RM_RemoveRole = "Remove Role",
+    IGUI_RM_SaveRole = "Save Role",
+    IGUI_RM_EnterRoleName = "Enter role name:",
+    IGUI_RM_ConfirmDeleteRole = "Are you sure you want to delete role '%1'?",
+
+    IGUI_RM_AddPlayer = "Add Player",
+    IGUI_RM_RemovePlayer = "Remove Player",
+    IGUI_RM_AddPlayers = "Add Players to Role",
+    IGUI_RM_SelectPlayersDesc = "Select players to add to this role:",
+    IGUI_RM_OnlinePlayers = "Online Players",
+    IGUI_RM_ManualInput = "Manual Input",
+    IGUI_RM_ManualInputDesc = "Enter usernames manually:",
+    IGUI_RM_ManualInputInstruct = "Enter usernames separated by semicolons (;)",
+    IGUI_RM_PreviewUsernames = "Preview:",
+
+    IGUI_RM_RoleName = "Role Name",
+    IGUI_RM_RoleColor = "Role Color",
+    IGUI_RM_ChooseColor = "Choose Color",
+    IGUI_RM_BracketStyle = "Bracket Style",
+    IGUI_RM_Priority = "Priority",
+
+    IGUI_RM_Add = "Add",
+    IGUI_RM_Cancel = "Cancel",
+    IGUI_RM_Close = "Close",
+
+    IGUI_RM_AccessDenied = "Access denied",
+    IGUI_RM_InvalidRoleData = "Invalid role data",
+    IGUI_RM_RoleNotFound = "Role not found",
+    IGUI_RM_RoleCreated = "Role '%1' created successfully",
+    IGUI_RM_RoleUpdated = "Role '%1' updated successfully",
+    IGUI_RM_RoleDeleted = "Role '%1' deleted successfully",
+    IGUI_RM_PlayersAdded = "%1 player(s) added to role '%2'",
+    IGUI_RM_PlayersRemoved = "%1 player(s) removed from role '%2'",
+
+    Tooltip_RM_Priority = "Higher priority roles will be displayed first",
+    Tooltip_RM_BracketStyle = "How the role will be displayed in chat",
+    Tooltip_RM_RoleColor = "Color of the role text in chat",
+}

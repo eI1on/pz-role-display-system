@@ -45,24 +45,6 @@ function RoleDisplaySystem.Shared.RequestRoles()
 	end
 end
 
-function RoleDisplaySystem.Shared.HasPermission(player)
-	if not player then
-		return false
-	end
-
-	if not isClient() and not isServer() then
-		return true
-	end
-
-	local requiredPermission = SandboxVars.RoleDisplaySystem.AdminAccess or RoleDisplaySystem.ACCESS_LEVEL.Admin
-
-	local playerAccessLevel = player:getAccessLevel()
-	local playerPermissionValue = RoleDisplaySystem.ACCESS_LEVEL[playerAccessLevel]
-		or RoleDisplaySystem.ACCESS_LEVEL.None
-
-	return playerPermissionValue >= requiredPermission
-end
-
 local rand = newrandom()
 local chars = "0123456789aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ"
 

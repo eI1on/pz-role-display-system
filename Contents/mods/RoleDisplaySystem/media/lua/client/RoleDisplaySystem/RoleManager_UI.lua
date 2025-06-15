@@ -1017,11 +1017,6 @@ function RoleDisplaySystem.UI_Manager:close()
 end
 
 function RoleDisplaySystem.UI_Manager.toggle(playerNum)
-	local player = getSpecificPlayer(playerNum)
-	if not RoleDisplaySystem.Shared.HasPermission(player) then
-		return
-	end
-
 	if RoleDisplaySystem.UI_Manager.instance then
 		RoleDisplaySystem.UI_Manager.instance:close()
 		return

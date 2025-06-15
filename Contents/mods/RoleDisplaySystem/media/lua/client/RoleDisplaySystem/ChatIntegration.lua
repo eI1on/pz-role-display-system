@@ -4,7 +4,7 @@ RoleDisplaySystem.ChatIntegration = {}
 
 local CHAT_CONFIG = {
 	ENABLED = true,
-	SHOW_MULTIPLE_ROLES = false,
+	SHOW_MULTIPLE_ROLES = true,
 }
 
 local playerRoleCache = {}

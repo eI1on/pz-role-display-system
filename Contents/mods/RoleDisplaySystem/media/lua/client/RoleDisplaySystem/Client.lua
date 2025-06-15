@@ -20,10 +20,6 @@ function RoleDisplaySystem.Client.Commands.RoleResponse(args)
 		return
 	end
 
-	if args.messageKey then
-		local message = getText(args.messageKey, args.messageArgs and args.messageArgs.roleName or "")
-	end
-
 	if RoleDisplaySystem.UI_Manager.instance and RoleDisplaySystem.UI_Manager.instance:isVisible() then
 		RoleDisplaySystem.UI_Manager.instance:updateRoleList()
 	end

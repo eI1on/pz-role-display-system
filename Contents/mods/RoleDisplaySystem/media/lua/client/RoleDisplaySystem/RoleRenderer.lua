@@ -148,9 +148,10 @@ local function isMouseHoveringOverPlayer(player)
 		return false
 	end
 
-	local tileX = tile:getSquare():getX()
-	local tileY = tile:getSquare():getY()
-	local tileZ = tile:getSquare():getZ()
+	local tileSquare = tile:getSquare()
+	local tileX = tileSquare:getX()
+	local tileY = tileSquare:getY()
+	local tileZ = tileSquare:getZ()
 
 	for x = tileX - 1, tileX + 1 do
 		for y = tileY - 1, tileY + 1 do
@@ -170,6 +171,8 @@ local function isMouseHoveringOverPlayer(player)
 	return false
 end
 
+---@param player IsoPlayer
+---@return boolean
 local function shouldRenderForPlayer(player)
 	if not player then
 		return false
@@ -243,12 +246,17 @@ local function shouldRenderForPlayer(player)
 	return hasLineOfSight
 end
 
+---@param player1 IsoPlayer
+---@param player2 IsoPlayer
+---@return number
 local function getPlayerDistance(player1, player2)
 	local dx = player1:getX() - player2:getX()
 	local dy = player1:getY() - player2:getY()
 	return math.sqrt(dx * dx + dy * dy)
 end
 
+---@param distance number
+---@return number
 local function getAlphaForDistance(distance)
 	if distance <= RENDER_CONFIG.FADE_DISTANCE then
 		return 1.0

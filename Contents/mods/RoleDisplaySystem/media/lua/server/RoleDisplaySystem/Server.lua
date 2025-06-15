@@ -82,14 +82,6 @@ end
 function RoleDisplaySystem.Server.ServerCommands.AddRole(player, args)
 	local roles = RoleDisplaySystem.Shared.RequestRoles()
 
-	if not RoleDisplaySystem.Shared.HasPermission(player) then
-		sendServerCommand(player, "RoleDisplaySystem", "RoleResponse", {
-			success = false,
-			messageKey = "IGUI_RM_AccessDenied",
-		})
-		return
-	end
-
 	local newRole = args.newRole
 	if not newRole then
 		sendServerCommand(player, "RoleDisplaySystem", "RoleResponse", {
@@ -142,14 +134,6 @@ end
 function RoleDisplaySystem.Server.ServerCommands.RemoveRole(player, args)
 	local roles = RoleDisplaySystem.Shared.RequestRoles()
 
-	if not RoleDisplaySystem.Shared.HasPermission(player) then
-		sendServerCommand(player, "RoleDisplaySystem", "RoleResponse", {
-			success = false,
-			messageKey = "IGUI_RM_AccessDenied",
-		})
-		return
-	end
-
 	local roleId = args.roleId
 	local role = roles[roleId]
 
@@ -185,14 +169,6 @@ end
 
 function RoleDisplaySystem.Server.ServerCommands.UpdateRole(player, args)
 	local roles = RoleDisplaySystem.Shared.RequestRoles()
-
-	if not RoleDisplaySystem.Shared.HasPermission(player) then
-		sendServerCommand(player, "RoleDisplaySystem", "RoleResponse", {
-			success = false,
-			messageKey = "IGUI_RM_AccessDenied",
-		})
-		return
-	end
 
 	local roleData = args.roleData
 	if not roleData or not roleData.id then
@@ -248,14 +224,6 @@ end
 
 function RoleDisplaySystem.Server.ServerCommands.ModifyRolePlayers(player, args)
 	local roles = RoleDisplaySystem.Shared.RequestRoles()
-
-	if not RoleDisplaySystem.Shared.HasPermission(player) then
-		sendServerCommand(player, "RoleDisplaySystem", "RoleResponse", {
-			success = false,
-			messageKey = "IGUI_RM_AccessDenied",
-		})
-		return
-	end
 
 	local roleId = args.roleId
 	local action = args.action

@@ -3,7 +3,6 @@ IGUI_EN = {
     IGUI_RM_Roles = "Roles",
     IGUI_RM_PlayersInRole = "Players in Role",
     IGUI_RM_RoleOptions = "Role Options",
-    IGUI_RM_NoRoleSelected = "No role selected",
 
     IGUI_RM_AddRole = "Add Role",
     IGUI_RM_RemoveRole = "Remove Role",
@@ -29,9 +28,7 @@ IGUI_EN = {
 
     IGUI_RM_Add = "Add",
     IGUI_RM_Cancel = "Cancel",
-    IGUI_RM_Close = "Close",
 
-    IGUI_RM_AccessDenied = "Access denied",
     IGUI_RM_InvalidRoleData = "Invalid role data",
     IGUI_RM_RoleNotFound = "Role not found",
     IGUI_RM_RoleCreated = "Role '%1' created successfully",
@@ -39,8 +36,4 @@ IGUI_EN = {
     IGUI_RM_RoleDeleted = "Role '%1' deleted successfully",
     IGUI_RM_PlayersAdded = "%1 player(s) added to role '%2'",
     IGUI_RM_PlayersRemoved = "%1 player(s) removed from role '%2'",
-
-    Tooltip_RM_Priority = "Higher priority roles will be displayed first",
-    Tooltip_RM_BracketStyle = "How the role will be displayed in chat",
-    Tooltip_RM_RoleColor = "Color of the role text in chat",
 }

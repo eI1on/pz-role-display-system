@@ -1,7 +1,7 @@
-name=[B41] Role Display System [DEV Branch]
+name=[B41] Role Display System
 poster=poster.png
-id=RoleDisplaySystem_DEV
-description=A comprehensive role management system for servers. Allows administrators to create custom roles with different colors and bracket styles, assign players to roles, and display them in chat with priority-based ordering.
+id=RoleDisplaySystem
+description=A lightweight, server-friendly way to show player roles across chat, nameplates, and maps. Designed for [b]multiplayer servers[/b] with [b]admin hierarchies[/b] or [b]custom communities[/b].
 require=ElyonLib,StarlitLibrary
 tags=Build 41,Misc,Multiplayer,Interface
 versionMin=41.0

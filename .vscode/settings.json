@@ -23,7 +23,7 @@
         "zombie"
     ],
         "[lua]": {
-        "editor.defaultFormatter": "JohnnyMorganz.stylua",
+        "editor.defaultFormatter": "sumneko.lua",
         "editor.formatOnSave": true
     }
 }

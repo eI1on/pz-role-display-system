@@ -2,11 +2,6 @@ local RoleDisplaySystem = require("RoleDisplaySystem/Shared")
 
 RoleDisplaySystem.ChatIntegration = {}
 
-local CHAT_CONFIG = {
-	ENABLED = true,
-	SHOW_MULTIPLE_ROLES = true,
-}
-
 local playerRoleCache = {}
 local cacheTimeout = 5000
 local lastCacheUpdate = {}
@@ -48,7 +43,7 @@ function RoleDisplaySystem.ChatIntegration.FormatPlayerRoles(username, forTextDr
 
 	local coloredRoles = {}
 
-	if CHAT_CONFIG.SHOW_MULTIPLE_ROLES then
+	if RoleDisplaySystem.CHAT_CONFIG.SHOW_MULTIPLE_ROLES then
 		for _, role in ipairs(roles) do
 			local roleTag = RoleDisplaySystem.Shared.FormatRoleTag(role)
 			local roleColor = RoleDisplaySystem.Shared.GetRoleColor(role)
@@ -102,7 +97,7 @@ end
 ---@param message ChatMessage
 ---@return string rolePrefix
 function RoleDisplaySystem.ChatIntegration.GetRolePrefix(message)
-	if not CHAT_CONFIG.ENABLED then
+	if not RoleDisplaySystem.CHAT_CONFIG.ENABLED then
 		return ""
 	end
 
@@ -183,19 +178,19 @@ function RoleDisplaySystem.ChatIntegration._metaMethodOverwrite.apply(class, met
 end
 
 function RoleDisplaySystem.ChatIntegration.Initialize()
-	if not CHAT_CONFIG.ENABLED then
+	if not RoleDisplaySystem.CHAT_CONFIG.ENABLED then
 		return
 	end
 
 	local chatIntegration = SandboxVars.RoleDisplaySystem.ChatIntegration
 	if chatIntegration ~= nil and not chatIntegration then
-		CHAT_CONFIG.ENABLED = false
+		RoleDisplaySystem.CHAT_CONFIG.ENABLED = false
 		return
 	end
 
 	local showMultiple = SandboxVars.RoleDisplaySystem.ShowMultipleRoles
 	if showMultiple ~= nil then
-		CHAT_CONFIG.SHOW_MULTIPLE_ROLES = showMultiple
+		RoleDisplaySystem.CHAT_CONFIG.SHOW_MULTIPLE_ROLES = showMultiple
 	end
 
 	local success = false

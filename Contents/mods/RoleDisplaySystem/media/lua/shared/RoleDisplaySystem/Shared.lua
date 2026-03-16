@@ -5,7 +5,12 @@ RoleDisplaySystem.VERSION = "1.0.0"
 RoleDisplaySystem.Roles = {}
 RoleDisplaySystem.Shared = {}
 
-local DEBUG_MODE = true
+RoleDisplaySystem.CHAT_CONFIG = {
+	ENABLED = true,
+	SHOW_MULTIPLE_ROLES = true,
+}
+
+local DEBUG_MODE = false
 function RoleDisplaySystem.Shared.debugLog(message, category)
 	if not DEBUG_MODE then
 		return

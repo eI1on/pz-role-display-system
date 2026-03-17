@@ -27,36 +27,57 @@ local function getOrCreateRoleText(playerOnlineID)
 end
 
 local function calculateUsernameWidth(player)
-	local width = 0
-	if not player then
-		return width
-	end
+	if not player then return 0 end
 
 	local username = player:getUsername()
-	if not username or username == "" then
-		return width
+	if not username or username == "" then return 0 end
+
+	local config = RoleDisplaySystem.CHAT_CONFIG
+
+	local access = player:getAccessLevel()
+	local hasAccess = access and access ~= "None"
+
+	local tag = player:getTagPrefix()
+	local hasTag = tag and tag ~= ""
+
+	local namePart = ""
+
+	if config.IS_SHOW_FIRST_AND_LAST_NAME then
+		if not hasAccess then
+			namePart = player:getFullName() or ""
+		end
 	end
 
-	local displayName = username
-
-	if player:getTagPrefix() and player:getTagPrefix() ~= "" then
-		displayName = "[" .. player:getTagPrefix() .. "] " .. displayName
+	if config.IS_DISPLAY_USERNAME then
+		if namePart ~= "" then
+			namePart = string.format("%s (%s)", namePart, username)
+		else
+			namePart = username
+		end
 	end
 
-	local playerAccessLevel = player:getAccessLevel()
-	if playerAccessLevel and playerAccessLevel ~= "None" then
-		displayName = "[" .. player:getAccessLevel() .. "] " .. displayName
+	local prefixParts = {}
+
+	if hasTag then
+		prefixParts[#prefixParts + 1] = "[" .. tag .. "]"
 	end
 
-	if player.isSpeek and not player.isVoiceMute then
+	if hasAccess and player:isShowAdminTag() then
+		prefixParts[#prefixParts + 1] = "[" .. access .. "]"
+	end
+
+	local displayName
+	if #prefixParts > 0 then
+		displayName = table.concat(prefixParts, " ") .. " " .. namePart
+	else
+		displayName = namePart
+	end
+
+	if player.isSpeek or player.isVoiceMute then
 		displayName = "   " .. displayName
-	elseif player.isVoiceMute then
-		displayName = "   " .. displayName
 	end
 
-	width = getTextManager():MeasureStringX(UIFont.Small, displayName)
-
-	return width
+	return getTextManager():MeasureStringX(UIFont.Small, displayName)
 end
 
 local function getPlayerUsernameHeight(player)
@@ -279,6 +300,11 @@ local function renderPlayerRoles()
 
 	local localPlayer = getPlayer()
 	if not localPlayer then
+		return
+	end
+
+	local config = RoleDisplaySystem.CHAT_CONFIG
+	if not config.IS_SHOW_FIRST_AND_LAST_NAME and not config.IS_DISPLAY_USERNAME then
 		return
 	end
 

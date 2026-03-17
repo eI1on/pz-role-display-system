@@ -185,7 +185,7 @@ local function renderPlayerRoles(self, player)
 	for i, role in ipairs(rolesToShow) do
 		local roleTag = RoleDisplaySystem.Shared.FormatRoleTag(role)
 		local roleColor = RoleDisplaySystem.Shared.GetRoleColor(role)
-		local roleWidth = roleWidths[i]
+		local roleWidth = roleWidths[i] or 0
 
 		local r, g, b = 0.0, 0.0, 0.0
 		if roleColor then

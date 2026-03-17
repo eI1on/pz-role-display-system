@@ -23,7 +23,7 @@
         "zombie"
     ],
         "[lua]": {
-        "editor.defaultFormatter": "sumneko.lua",
+        "editor.defaultFormatter": "tangzx.emmylua",
         "editor.formatOnSave": true
     }
 }

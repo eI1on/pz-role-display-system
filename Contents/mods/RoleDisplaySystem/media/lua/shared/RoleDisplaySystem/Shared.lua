@@ -8,6 +8,8 @@ RoleDisplaySystem.Shared = {}
 RoleDisplaySystem.CHAT_CONFIG = {
 	ENABLED = true,
 	SHOW_MULTIPLE_ROLES = true,
+	IS_SHOW_FIRST_AND_LAST_NAME = false,
+	IS_DISPLAY_USERNAME = true,
 }
 
 local DEBUG_MODE = false

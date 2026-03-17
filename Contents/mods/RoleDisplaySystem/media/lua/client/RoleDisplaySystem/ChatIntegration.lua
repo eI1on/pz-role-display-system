@@ -193,6 +193,9 @@ function RoleDisplaySystem.ChatIntegration.Initialize()
 		RoleDisplaySystem.CHAT_CONFIG.SHOW_MULTIPLE_ROLES = showMultiple
 	end
 
+	RoleDisplaySystem.CHAT_CONFIG.IS_SHOW_FIRST_AND_LAST_NAME = getServerOptions():getBoolean("ShowFirstAndLastName")
+	RoleDisplaySystem.CHAT_CONFIG.IS_DISPLAY_USERNAME = getServerOptions():getBoolean("DisplayUserName")
+
 	local success = false
 
 	if zombie and zombie.chat and zombie.chat.ChatMessage then

@@ -22,7 +22,7 @@
     "Lua.diagnostics.globals": ["require", "Calendar", "zombie"],
     "Lua.diagnostics.disable": ["lowercase-global"],
     "[lua]": {
-        "editor.defaultFormatter": "JohnnyMorganz.stylua",
+        "editor.defaultFormatter": "sumneko.lua",
         "editor.formatOnSave": true
     }
 }

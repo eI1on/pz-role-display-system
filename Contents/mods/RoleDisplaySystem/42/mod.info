@@ -1,0 +1,7 @@
+name=[B42] Role Display System
+poster=poster.png
+id=RoleDisplaySystem
+description=A lightweight, server-friendly way to show player roles across chat, nameplates, and maps. Designed for [b]multiplayer servers[/b] with [b]admin hierarchies[/b] or [b]custom communities[/b].
+require=ElyonLib
+tags=Build 42,Misc,Multiplayer,Interface
+versionMin=42.0

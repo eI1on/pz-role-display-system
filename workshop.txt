@@ -1,7 +1,7 @@
 version=1
 id=3546349044
-title=[B41] Role Display System
-description=A lightweight, server-friendly way to show player roles across chat, nameplates, and maps. [b]Role Manager[/b] opens from the [b]Dock Menu[/b] implemented by [b]ElyonLib[/b], with the same tools mirrored under the Admin Panel for players who prefer that route. Designed for [b]multiplayer servers[/b] with [b]admin hierarchies[/b] or [b]custom communities[/b].
+title=[B41/B42] Role Display System
+description=A lightweight, server-friendly way to show player roles across chat, nameplates, and maps. [b]Role Manager[/b] opens from the [b]Dock Menu[/b] implemented by [b]ElyonLib[/b]. Designed for [b]multiplayer servers[/b] with [b]admin hierarchies[/b] or [b]custom communities[/b].
 description=
 description=[h1]What it does[/h1]
 description=[list]
@@ -86,5 +86,5 @@ description=This mod's permissions fall under TIS's policy [url=https://theindie
 description=This mod cannot be modified by anyone else, for anything else, at all, ever. Even if the user disappears, they would much rather you didn't touch the fruits of their hard labour.
 description=[/quote]
 description=[url=http://theindiestone.com/forums/index.php/topic/2530-mod-permissions/?p=36479][img] https://raw.githubusercontent.com/eI1on/workshop_resources/main/mod_permissions_images/on_lockdown.png [/img][/url]
-tags=Build 41;Interface;Misc;Multiplayer
+tags=Build 41;Build 42;Interface;Misc;Multiplayer
 visibility=public

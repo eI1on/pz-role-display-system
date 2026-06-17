@@ -1,0 +1,25 @@
+17/06/2026
+B42 Hotfix
+
+[list]
+[*]Fixed role creation not updating or appearing correctly in multiplayer.
+[*]Adjusted the B42 client/server command flow so role changes are sent to the server properly.
+[*]Updated server-side role management permission checks for B42 multiplayer.
+[/list]
+
+16/06/2026
+B42 Port Changelog
+
+[list]
+[*]Added support for [b]B42[/b].
+[*]Reworked the role manager UI for the newer B42 interface behavior.
+[*]Added support for singleplayer role management.
+[*]Added role display support for world map and minimap.
+[*]Updated translations to the B42 JSON format.
+[*]Improved role creation, editing, searching, and player assignment.
+[*]Added global display settings for names, maps, chat, and multiple roles.
+[*]Added per-role control for whether a role appears when multiple roles are displayed.
+[*]Improved bracket style selection and live role previews.
+[*]Fixed role search/input lag caused by outdated text entry handling.
+[*]Cleaned up B41 compatibility issues in the B42 version.
+[/list]

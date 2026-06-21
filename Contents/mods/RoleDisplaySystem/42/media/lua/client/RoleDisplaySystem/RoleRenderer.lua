@@ -20,6 +20,11 @@ local roleTextCache = {}
 local cacheCleanupTimer = 0
 local CACHE_CLEANUP_INTERVAL = 300
 
+local function getNameDisplayOptions()
+	local serverOptions = getServerOptions()
+	return serverOptions:getBoolean("DisplayUserName"), serverOptions:getBoolean("ShowFirstAndLastName")
+end
+
 local function getOrCreateRoleText(playerOnlineID)
 	if not roleTextCache[playerOnlineID] then
 		local textObj = TextDrawObject.new(255, 255, 255, true, true, true, true, true, true)
@@ -35,7 +40,7 @@ local function calculateUsernameWidth(player)
 	local username = player:getUsername()
 	if not username or username == "" then return 0 end
 
-	local config = RoleDisplaySystem.CHAT_CONFIG
+	local displayUsername, showFirstAndLastName = getNameDisplayOptions()
 
 	local access = player:getAccessLevel()
 	local hasAccess = access and access ~= "None"
@@ -45,18 +50,19 @@ local function calculateUsernameWidth(player)
 
 	local namePart = ""
 
-	if config.IS_SHOW_FIRST_AND_LAST_NAME then
-		if not hasAccess then
-			namePart = player:getFullName() or ""
-		end
+	if showFirstAndLastName then
+		namePart = player:getFullName() or ""
 	end
 
-	if config.IS_DISPLAY_USERNAME then
+	if displayUsername then
 		if namePart ~= "" then
 			namePart = string.format("%s (%s)", namePart, username)
 		else
 			namePart = username
 		end
+	elseif not showFirstAndLastName then
+		-- B42 builds this value before CanSeeAll decides whether it is drawn.
+		namePart = username
 	end
 
 	local prefixParts = {}
@@ -93,14 +99,26 @@ local function getPlayerUsernameHeight(player)
 	return getTextManager():MeasureStringY(UIFont.Small, player:getUsername() or "")
 end
 
-local function playerCanSeeAll(player)
-	if not player then
+local function playerHasCapability(player, capability)
+	if not player or not capability or not player.getRole then
 		return false
 	end
-	if player.canSeeAll then
-		return player:canSeeAll()
+
+	local role = player:getRole()
+	return role ~= nil and role.hasCapability ~= nil and role:hasCapability(capability)
+end
+
+local function canViewerSeeInvisiblePlayer(viewer, target)
+	if not viewer or not target then
+		return false
 	end
-	return false
+	if viewer == target or not target:isInvisible() then
+		return true
+	end
+
+	-- match IsoGameCharacter.updateUserName(): this capability controls whether
+	-- an invisible remote player's overhead identity is shown to the viewer.
+	return playerHasCapability(viewer, Capability.CanSeePlayersStats)
 end
 
 local function getAllVisiblePlayers()
@@ -174,21 +192,31 @@ local function getPlayerScreenPosition(player)
 	return screenX, screenY
 end
 
-local function isMouseHoveringOverPlayer(player)
+local function isMouseOverPlayerCharacter(player)
 	if not player then
 		return false
 	end
 
+	local pickedTarget = IsoObjectPicker.Instance:PickTarget(Mouse.getXA(), Mouse.getYA())
+	if pickedTarget == player then
+		return player:getTargetAlpha(player:getPlayerNum()) == 1.0
+	end
+
+	-- pickTarget does not use B42's FBO object picker. Match the character area
+	-- used by the native overhead-name projection when that picker returns nil.
 	local screenX, screenY = getPlayerScreenPosition(player)
+	local zoom = Core.getInstance():getZoom(0)
+	local tileScale = Core.getTileScale()
+	local characterHeight = (128 / (2 / tileScale)) / zoom
+	local characterHalfWidth = (24 * tileScale) / zoom
 	local mouseX = Mouse.getXA()
 	local mouseY = Mouse.getYA()
-	local halfWidth = math.max(calculateUsernameWidth(player), 48) / 2
-	local height = math.max(getPlayerUsernameHeight(player), 18)
 
-	return mouseX >= screenX - halfWidth
-		and mouseX <= screenX + halfWidth
-		and mouseY >= screenY - height - 8
-		and mouseY <= screenY + 24
+	return player:getTargetAlpha(player:getPlayerNum()) == 1.0
+		and mouseX >= screenX - characterHalfWidth
+		and mouseX <= screenX + characterHalfWidth
+		and mouseY >= screenY
+		and mouseY <= screenY + characterHeight
 end
 
 ---@param player IsoPlayer
@@ -207,9 +235,12 @@ local function shouldRenderForPlayer(player)
 		return false
 	end
 
-	local localPlayerAccessLevel = localPlayer:getAccessLevel()
-	local hasAdminPrivileges = localPlayerAccessLevel and localPlayerAccessLevel ~= "None"
-	local hasDebugSeeAll = playerCanSeeAll(localPlayer)
+	if not canViewerSeeInvisiblePlayer(localPlayer, player) then
+		return false
+	end
+
+	local hasDebugSeeAll = localPlayer.canSeeAll and localPlayer:canSeeAll()
+	local displayUsername, showFirstAndLastName = getNameDisplayOptions()
 
 	local currentSquare = player:getCurrentSquare()
 	local hasLineOfSight = false
@@ -219,43 +250,11 @@ local function shouldRenderForPlayer(player)
 	if not hasLineOfSight and not hasDebugSeeAll then
 		return false
 	end
-	if player:isInvisible() then
-		if not hasAdminPrivileges and not hasDebugSeeAll then
-			return false
-		end
-
-		if
-			not getServerOptions():getBoolean("DisplayUserName")
-			and not getServerOptions():getBoolean("ShowFirstAndLastName")
-			and not hasDebugSeeAll
-		then
-			return false
-		end
-
-		if
-			getServerOptions():getBoolean("MouseOverToSeeDisplayName")
-			and player ~= localPlayer
-			and not hasDebugSeeAll
-		then
-			return isMouseHoveringOverPlayer(player)
-		end
-
-		return true
-	end
-
-	if not hasLineOfSight and not hasDebugSeeAll then
-		return false
-	end
-
 	if getServerOptions():getBoolean("MouseOverToSeeDisplayName") and player ~= localPlayer and not hasDebugSeeAll then
-		return isMouseHoveringOverPlayer(player)
+		return isMouseOverPlayerCharacter(player)
 	end
 
-	if
-		not getServerOptions():getBoolean("DisplayUserName")
-		and not getServerOptions():getBoolean("ShowFirstAndLastName")
-		and not hasDebugSeeAll
-	then
+	if not displayUsername and not showFirstAndLastName and not hasDebugSeeAll then
 		return false
 	end
 
@@ -295,8 +294,8 @@ local function renderPlayerRoles()
 		return
 	end
 
-	local config = RoleDisplaySystem.CHAT_CONFIG
-	if not config.IS_SHOW_FIRST_AND_LAST_NAME and not config.IS_DISPLAY_USERNAME then
+	local displayUsername, showFirstAndLastName = getNameDisplayOptions()
+	if not displayUsername and not showFirstAndLastName and not (localPlayer.canSeeAll and localPlayer:canSeeAll()) then
 		return
 	end
 

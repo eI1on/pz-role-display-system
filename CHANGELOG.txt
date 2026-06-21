@@ -1,3 +1,17 @@
+21/06/2026
+B42 Hotfix #
+
+[list]
+[*]Fixed invisible staff role labels being visible to normal players.
+[*]Updated overhead role visibility to follow B42's native [b]CanSeePlayersStats[/b] permission used by the username renderer.
+[*]Fixed overhead roles not appearing for staff members who are allowed to see invisible players' names.
+[*]Fixed role visibility when [b]MouseOverToSeeDisplayName[/b] is enabled; roles now appear when hovering over the player character.
+[*]Added hover support for B42's FBO renderer and fixed the related Java [b]ClickObject[/b] Lua error.
+[*]Corrected overhead role placement for every [b]DisplayUserName[/b] and [b]ShowFirstAndLastName[/b] combination.
+[*]World map and minimap role visibility now follows B42's CanSeeAll capability and viewer-to-target role power hierarchy.
+[*]Matched the world map and minimap role background to the native username background color and opacity.
+[/list]
+
 17/06/2026
 B42 Hotfix
 

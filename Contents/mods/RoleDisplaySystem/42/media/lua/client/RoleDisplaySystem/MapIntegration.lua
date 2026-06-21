@@ -10,14 +10,41 @@ local MAP_CONFIG = {
 
 RoleDisplaySystem.MapIntegration.Config = MAP_CONFIG
 
-local function playerCanSeeAll(player)
-	if not player then
+local function getPlayerRole(player)
+	if not player or not player.getRole then
+		return nil
+	end
+	return player:getRole()
+end
+
+local function roleHasCapability(role, capability)
+	return role ~= nil and capability ~= nil and role.hasCapability ~= nil and role:hasCapability(capability)
+end
+
+local function getRolePower(role)
+	if not role or not role.getCapabilities then
+		return 0
+	end
+
+	local capabilities = role:getCapabilities()
+	if not capabilities or not capabilities.size then
+		return 0
+	end
+	return capabilities:size()
+end
+
+local function canViewerSeeInvisiblePlayerOnMap(viewer, target)
+	if not viewer or not target then
 		return false
 	end
-	if player.canSeeAll then
-		return player:canSeeAll()
+	if viewer == target or not target:isInvisible() then
+		return true
 	end
-	return false
+
+	local viewerRole = getPlayerRole(viewer)
+	local targetRole = getPlayerRole(target)
+	return roleHasCapability(viewerRole, Capability.CanSeeAll)
+		and getRolePower(viewerRole) >= getRolePower(targetRole)
 end
 
 local function getAllMapPlayers()
@@ -60,10 +87,8 @@ local function shouldShowPlayerOnMap(player)
 		return false
 	end
 
-	if player:isInvisible() then
-		local localPlayerAccessLevel = localPlayer:getAccessLevel()
-		local hasAdminPrivileges = localPlayerAccessLevel and localPlayerAccessLevel ~= "None"
-		return hasAdminPrivileges or playerCanSeeAll(localPlayer)
+	if not canViewerSeeInvisiblePlayerOnMap(localPlayer, player) then
+		return false
 	end
 
 	if isClient() and player ~= localPlayer then
@@ -89,21 +114,6 @@ local function shouldRenderRolesOnMap(player)
 	end
 	if not shouldShowPlayerOnMap(player) then
 		return false
-	end
-
-	local localPlayer = getPlayer()
-	if not localPlayer then
-		return false
-	end
-
-	if player:isInvisible() then
-		local localPlayerAccessLevel = localPlayer:getAccessLevel()
-		local hasAdminPrivileges = localPlayerAccessLevel and localPlayerAccessLevel ~= "None"
-		local hasDebugSeeAll = playerCanSeeAll(localPlayer)
-
-		if not hasAdminPrivileges and not hasDebugSeeAll then
-			return false
-		end
 	end
 
 	return true
@@ -133,7 +143,7 @@ local function renderPlayerRoles(self, player)
 	end
 
 	local api = self.mapAPI or
-	(self.javaObject and (self.javaObject.getAPIv3 and self.javaObject:getAPIv3() or self.javaObject:getAPI()))
+		(self.javaObject and (self.javaObject.getAPIv3 and self.javaObject:getAPIv3() or self.javaObject:getAPI()))
 	if not api then
 		return
 	end
@@ -188,7 +198,7 @@ local function renderPlayerRoles(self, player)
 		0.5,
 		0.5,
 		0.5,
-		0.25
+		0.5
 	)
 
 	local currentX = roleBackgroundX + rolePadding / 2.0
@@ -216,7 +226,7 @@ end
 
 local function renderAllPlayerRoles(self)
 	local api = self.mapAPI or
-	(self.javaObject and (self.javaObject.getAPIv3 and self.javaObject:getAPIv3() or self.javaObject:getAPI()))
+		(self.javaObject and (self.javaObject.getAPIv3 and self.javaObject:getAPIv3() or self.javaObject:getAPI()))
 	if not api or (api.getBoolean and not api:getBoolean("Players")) then
 		return
 	end

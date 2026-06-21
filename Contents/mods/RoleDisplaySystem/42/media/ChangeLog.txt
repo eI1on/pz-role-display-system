@@ -1,0 +1,17 @@
+[ ALERT_CONFIG ]
+link1 = Elyon's Kofi = https://steamcommunity.com/linkfilter/?u=https://ko-fi.com/ely0n,
+link2 = Workshop = https://steamcommunity.com/profiles/76561199033892043/myworkshopfiles/?appid=108600,
+link3 = Github = https://steamcommunity.com/linkfilter/?u=https://github.com/eI1on,
+link3 = Host Server = https://indifferentbroccoli.com/project-zomboid-server-hosting?fpr=elyon,
+[ ------ ]
+
+[ 06/21/26 Hotfix # ]
+- Fixed invisible staff role labels being visible to normal players.
+- Overhead role rendering now follows B42's CanSeePlayersStats permission used by the native username renderer.
+- Fixed overhead role labels not appearing for authorized staff viewers.
+- Role labels now follow the native player-character hover behavior when MouseOverToSeeDisplayName is enabled.
+- Added B42 FBO-renderer hover support and fixed the related Java ClickObject Lua error.
+- Overhead role placement now respects every DisplayUserName and ShowFirstAndLastName combination.
+- World map and minimap role visibility now follows B42's CanSeeAll capability and viewer-to-target role power hierarchy.
+- World map and minimap role backgrounds now match the native username background color and opacity.
+[ ------ ]

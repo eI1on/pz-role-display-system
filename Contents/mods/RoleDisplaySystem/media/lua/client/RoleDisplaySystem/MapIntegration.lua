@@ -176,7 +176,7 @@ local function renderPlayerRoles(self, player)
 		0.5,
 		0.5,
 		0.5,
-		0.25
+		0.5
 	)
 
 	local currentX = roleBackgroundX + rolePadding / 2.0
